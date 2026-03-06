@@ -1,4 +1,3 @@
-
 :root {
     --bg: #fef9f0;
     --card: #ffffff;
@@ -34,7 +33,7 @@ body {
 
     .header h1 {
         font-family: 'Fredoka One', cursive;
-        font-size: clamp(2rem, 8vw, 3.2rem);
+        font-size: clamp(1.6rem, 6vw, 3.2rem);
         color: var(--text);
         line-height: 1.1;
     }
@@ -45,7 +44,7 @@ body {
 
     .header p {
         color: var(--muted);
-        font-size: 1rem;
+        font-size: clamp(0.8rem, 3vw, 1rem);
         margin-top: 6px;
         font-weight: 600;
     }
@@ -74,7 +73,7 @@ body {
     background: linear-gradient(135deg, var(--accent), #ff9f43);
     color: white;
     font-family: 'Fredoka One', cursive;
-    font-size: 1.3rem;
+    font-size: clamp(1rem, 4vw, 1.3rem);
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(255,107,53,0.35);
     transition: transform .15s, box-shadow .15s;
@@ -174,26 +173,25 @@ body {
 
     .weather-chip .chip-val {
         font-family: 'Fredoka One', cursive;
-        font-size: 2rem;
+        font-size: clamp(1.4rem, 5vw, 2rem);
         line-height: 1;
     }
 
     .weather-chip .chip-lbl {
-        font-size: 0.8rem;
+        font-size: clamp(0.7rem, 2.5vw, 0.8rem);
         font-weight: 600;
         opacity: 0.85;
         margin-top: 4px;
     }
 
 .advice-icon {
-    font-size: 5rem;
+    font-size: clamp(3.5rem, 12vw, 5rem);
     text-align: center;
     line-height: 1;
     margin: 8px 0 16px;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     animation: bounce 2s ease-in-out infinite;
 }
-
 
 @keyframes bounce {
     0%, 100% {
@@ -209,10 +207,9 @@ body {
     animation: bounce 2s infinite;
 }
 
-
 .advice-title {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
     color: white;
     text-align: center;
     margin-bottom: 12px;
@@ -225,7 +222,7 @@ body {
     border-radius: 14px;
     padding: 16px;
     color: white;
-    font-size: 1.05rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem);
     font-weight: 600;
     line-height: 1.5;
     text-align: center;
@@ -234,7 +231,7 @@ body {
 /* ── Clothing icons guide ─── */
 .guide-title {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 4vw, 1.2rem);
     color: var(--text);
     margin-bottom: 14px;
 }
@@ -252,13 +249,14 @@ body {
     background: #f8f9fa;
     border-radius: 12px;
     padding: 10px 12px;
-    font-size: 0.85rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
     font-weight: 700;
     color: var(--text);
 }
 
     .guide-item span:first-child {
-        font-size: 1.5rem;
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+        flex-shrink: 0;
     }
 
 .coord-tag {
@@ -276,6 +274,7 @@ footer {
     text-align: center;
 }
 
+/* ── Info popup ─── */
 .chip-sub {
     font-size: 0.72rem;
     opacity: 0.75;
@@ -315,3 +314,70 @@ footer {
     .info-popup.visible {
         display: block;
     }
+
+/* ── Mobile (max 480px) ─── */
+@media (max-width: 480px) {
+    body {
+        padding: 16px 12px 40px;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .card {
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+
+    .result-card {
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+
+    .btn-gps {
+        padding: 15px;
+        border-radius: 14px;
+    }
+
+        .btn-gps svg {
+            width: 22px;
+            height: 22px;
+        }
+
+    .weather-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .weather-chip {
+        padding: 12px;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-item {
+        padding: 10px;
+    }
+
+    .advice-desc {
+        padding: 12px;
+    }
+}
+
+/* ── Liten mobil (max 360px) ─── */
+@media (max-width: 360px) {
+    .header h1 {
+        font-size: 1.4rem;
+    }
+
+    .advice-icon {
+        font-size: 3rem;
+    }
+
+    .advice-title {
+        font-size: 1.2rem;
+    }
+}
