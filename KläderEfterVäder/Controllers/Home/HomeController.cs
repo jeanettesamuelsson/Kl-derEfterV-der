@@ -22,6 +22,9 @@ public class HomeController : Controller
             vm.Lat = lat.Value;
             vm.Lon = lon.Value;
 
+            
+            vm.CityName = await GetCityName(lat.Value, lon.Value);
+
             try
             {
                 var http = _httpClientFactory.CreateClient("smhi");
@@ -48,11 +51,9 @@ public class HomeController : Controller
 
                     foreach (var entry in timeSeries.EnumerateArray())
                     {
-                        // Varje tidssteg har ett fält "validTime" ex: "2024-03-06T12:00:00Z"
                         var validTime = entry.GetProperty("validTime").GetString();
                         if (!DateTime.TryParse(validTime, out var dt)) continue;
 
-                        // Bara tidssteg mellan 06:00 och 15:00 (UTC) för dagens datum
                         if (dt.Date != today) continue;
                         if (dt.Hour < 6 || dt.Hour > 15) continue;
 
@@ -86,5 +87,40 @@ public class HomeController : Controller
         }
 
         return View(vm);
+    }
+
+    // ── Reverse geocoding via OpenStreetMap Nominatim ────────────────────
+    private async Task<string?> GetCityName(double lat, double lon)
+    {
+        try
+        {
+            var http = _httpClientFactory.CreateClient();
+            var latF = lat.ToString("F6", System.Globalization.CultureInfo.InvariantCulture);
+            var lonF = lon.ToString("F6", System.Globalization.CultureInfo.InvariantCulture);
+            var url = $"https://nominatim.openstreetmap.org/reverse?lat={latF}&lon={lonF}&format=json";
+
+            
+            http.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "ClothesByWeather/1.0");
+
+            var resp = await http.GetAsync(url);
+            if (!resp.IsSuccessStatusCode) return null;
+
+            var json = await resp.Content.ReadAsStringAsync();
+            using var doc = JsonDocument.Parse(json);
+
+            if (!doc.RootElement.TryGetProperty("address", out var address)) return null;
+
+            
+            if (address.TryGetProperty("city", out var city)) return city.GetString();
+            if (address.TryGetProperty("municipality", out var mun)) return mun.GetString();
+            if (address.TryGetProperty("town", out var town)) return town.GetString();
+            if (address.TryGetProperty("village", out var village)) return village.GetString();
+
+            return null;
+        }
+        catch
+        {
+            return null; 
+        }
     }
 }

@@ -12,7 +12,10 @@ public class WeatherViewModel
     public double? TempMax { get; set; }  // Dagens högsta
     public double? Precipitation { get; set; }
 
+    public string? CityName { get; set; }
+
     // ── Resultat ─────────────────────────────────────
+
     public ClothingAdvice? Advice { get; set; }
     public string? ErrorMessage { get; set; }
 

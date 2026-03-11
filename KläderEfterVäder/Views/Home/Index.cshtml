@@ -60,7 +60,9 @@
         <div class="advice-desc">@Model.Advice.Description</div>
     </div>
 
-    <p class="coord-tag">📍 Lat: @Model.Lat?.ToString("F4") · Lon: @Model.Lon?.ToString("F4")</p>
+    <p class="coord-tag">
+        📍 @(Model.CityName ?? $"{Model.Lat?.ToString("F4")}, {Model.Lon?.ToString("F4")}")
+    </p>
 }
 
 <!-- Klädguide -->
